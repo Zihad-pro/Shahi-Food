@@ -20,6 +20,13 @@ const Navbar = () => {
       <li className="font-semibold">
         <Link href="#recipes">Upcoming recipes</Link>
       </li>
+      <li className="font-semibold">
+        {status === "authenticated" ? (
+          <Link href="/dashboard">Dashboard</Link>
+        ) : (
+          <Link href="/login">Dashboard</Link>
+        )}
+      </li>
     </>
   );
 

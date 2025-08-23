@@ -9,15 +9,15 @@ const Discounts = () => {
   useEffect(() => {
     const fetchMeals = async () => {
       try {
-        const response = await fetch(
-          "https://www.themealdb.com/api/json/v1/1/search.php?s="
-        );
+        const response = await fetch("/api/products"); // ✅ fetch from your API
         const data = await response.json();
+
         // Add fake discount for demo
-        const discountedMeals = (data.meals || []).map((meal) => ({
+        const discountedMeals = (data || []).map((meal) => ({
           ...meal,
           discount: Math.floor(Math.random() * 40) + 10, // 10% – 50%
         }));
+
         setMeals(discountedMeals);
       } catch (error) {
         console.error("Error fetching meals:", error);
@@ -57,19 +57,20 @@ const Discounts = () => {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
             {meals.map((meal) => {
-              const oldPrice = (Math.random() * 30 + 10).toFixed(2);
-              const newPrice = (oldPrice * (1 - meal.discount / 100)).toFixed(
+              const oldPrice = meal.price.toFixed(2);
+              const newPrice = (meal.price * (1 - meal.discount / 100)).toFixed(
                 2
               );
+
               return (
                 <div
-                  key={meal.idMeal}
+                  key={meal._id}
                   className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition cursor-pointer"
                 >
                   <div className="relative">
                     <img
-                      src={meal.strMealThumb}
-                      alt={meal.strMeal}
+                      src={meal.image}
+                      alt={meal.name}
                       className="w-full h-52 object-cover"
                     />
                     <span className="absolute top-3 left-3 bg-red-600 text-white text-sm font-bold px-3 py-1 rounded-full shadow">
@@ -78,10 +79,10 @@ const Discounts = () => {
                   </div>
                   <div className="p-5">
                     <h3 className="text-lg font-semibold text-gray-800 mb-2 truncate">
-                      {meal.strMeal}
+                      {meal.name}
                     </h3>
-                    <p className="text-sm text-gray-600 mb-3">
-                      {meal.strCategory} • {meal.strArea}
+                    <p className="text-sm text-gray-600 mb-3 truncate">
+                      {meal.description}
                     </p>
                     <div className="flex items-center justify-between">
                       <span className="text-gray-500 line-through">
@@ -91,7 +92,7 @@ const Discounts = () => {
                         ${newPrice}
                       </span>
                     </div>
-                    <Link href={`/products/${meal.idMeal}`}>
+                    <Link href={`/products/${meal._id}`}>
                       <button className="mt-4 w-full bg-yellow-600 text-white py-2 rounded-lg font-medium hover:bg-yellow-700 transition cursor-pointer">
                         View recipe
                       </button>
