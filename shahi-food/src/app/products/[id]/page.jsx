@@ -1,16 +1,16 @@
 import Link from "next/link";
 
 async function fetchProduct(id) {
-  const res = await fetch(`http://localhost:3000/api/products/${id}`, {
-    cache: "no-store", // Always fresh
+  const res = await fetch(`https://shahi-food.vercel.app/api/products/${id}`, {
+    cache: "no-store",
   });
-
   if (!res.ok) return null;
   return res.json();
 }
 
 export default async function ProductDetail({ params }) {
-  const product = await fetchProduct(params.id);
+    const { id } = await params; 
+    const product = await fetchProduct(id);
 
   if (!product) {
     return (
@@ -23,7 +23,6 @@ export default async function ProductDetail({ params }) {
   return (
     <div className="bg-gray-100 min-h-screen p-8">
       <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
-        {/* Back Button */}
         <Link href="/">
           <button className="inline-block px-5 py-2 bg-yellow-600 text-white font-semibold text-xl shadow-lg hover:bg-yellow-700 cursor-pointer transition text-left w-full">
             ← Back to Home

@@ -1,10 +1,12 @@
-// /app/api/products/[id]/route.js
 import clientPromise from "@/app/lib/mongodb";
 import { ObjectId } from "mongodb";
 
-export async function GET(req, { params }) {
+export async function GET(req, context) {
   try {
-    const { id } = params;
+    // Await params before using them
+    const params = await context.params;
+    const id = params.id;
+
     const client = await clientPromise;
     const db = client.db("shahifood");
 
