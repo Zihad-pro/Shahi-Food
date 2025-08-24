@@ -22,7 +22,7 @@ The project focuses on providing a **simple and elegant UI** for a smooth food o
 | `/login` | 🔐 User login (GitHub authentication) |
 | `/products` | 🍕 Displays all available meals/products |
 | `/products/[id]` | 📖 Single product details page |
-| `/dashboard` | 📊 User dashboard with profile info |
+| `/dashboard` | 📊 User dashboard with profile info and add product system |
 
 ---
 
